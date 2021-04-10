@@ -1,0 +1,29 @@
+
+<LoginScreen>:
+	Label:
+		color: 1, 1, 0, 1
+		font_size: 50
+		text: 'Login: '
+	TextInput:
+		font_size: 20
+		multiline: False
+	Label:
+		color: 1, 1, 0, 1
+		font_size: 50
+		text: 'Password: '
+	TextInput:
+		font_size: 20
+		password: True
+		multiline: False
+	Button:
+		color: 0,0,1,1
+		background_color: 0.2,0.7,0.4,1
+		font_size: 35
+		text: 'Register'
+		on_press: print('reg')
+	Button:
+		color: 0,1,0,1
+		background_color: 0.2,0.4,0.6,1
+		font_size: 40
+		text: 'Sign in >>> '
+		on_press: print('sing')
