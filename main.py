@@ -6,6 +6,12 @@ from kivy.properties import NumericProperty
 class LoginScreen(GridLayout):
 	cols = NumericProperty(2)
 
+	def register(self):
+		print('reg')
+
+	def sing_in(self, user_id, password, *args):
+		print(f'User: {user_id}, password: {password}')
+
 class AddrBook(App):
 	def build(self):
 		return LoginScreen()
