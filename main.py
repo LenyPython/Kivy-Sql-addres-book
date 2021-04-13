@@ -1,11 +1,8 @@
 import kivy
 from kivy.app import App
-from kivy.uix.gridlayout import GridLayout
-from kivy.properties import NumericProperty
+from kivy.uix.widget import Widget
 
-class LoginScreen(GridLayout):
-	cols = NumericProperty(2)
-
+class LoginScreen(Widget):
 	def register(self):
 		print('reg')
 
@@ -14,7 +11,8 @@ class LoginScreen(GridLayout):
 
 class AddrBook(App):
 	def build(self):
-		return LoginScreen()
+		login = LoginScreen()
+		return login
 
 
 if __name__ == '__main__':
