@@ -62,7 +62,8 @@
 			size_hint: None, None
 			width: 200
 			height: 75
-			background_color: 0.2,0.7,0.4,1
+			background_normal: ''
+			background_color: 0.2,0.7,0.4,0.8
 			text: 'Register'
 			on_press: root.register()
 		Button:
@@ -70,6 +71,7 @@
 			font_size: 40
 			size_hint: 1, None
 			height: 75
-			background_color: 0.2,0.4,0.6,1
+			background_normal: ''
+			background_color: 0.2,0.4,0.6,0.8
 			text: 'Sign in >>> '
 			on_press: root.sing_in(user_input.text, password.text)
