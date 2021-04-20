@@ -14,6 +14,7 @@ create_contacts='''CREATE TABLE IF NOT EXISTS contacts (
 					second_name text NOT NULL,
 					email text NOT NULL,
 					phone integer
+					FOREIGN KEY (user) REFERENCE users (id);
 					);'''
 def connect(path):
 	'''Create a db connection to the SQLite database

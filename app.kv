@@ -1,0 +1,155 @@
+Manager:
+	LoginScreen:
+		name: 'log'
+	RegisterScreen:
+		name: 'reg'
+
+<RegisterScreen>:
+	GridLayout:
+		cols: 2
+		Label:
+			canvas.before:
+				Color:
+					rgba: 0.2,0.2,0.7,1
+				Rectangle:
+					pos: self.pos
+					size: self.size
+			text_size: self.size
+			halign: 'right'
+			color: 1, 1, 0, 1
+			size_hint_y: None
+			height: 50
+			font_size: 30
+			text: 'Choose user name: '
+		TextInput:
+			id: user_name
+			size_hint_y: None
+			height: 50
+			font_size: 20
+			multiline: False
+			text: 'user id'
+		Label:
+			canvas.before:
+				Color:
+					rgba: 0.2,0.2,0.7,1
+				Rectangle:
+					pos: self.pos
+					size: self.size
+			text_size: self.size
+			halign: 'right'
+			color: 1, 1, 0, 1
+			size_hint_y: None
+			height: 50
+			font_size: 30
+			text: 'Password: '
+		TextInput:
+			id: password1
+			size_hint_y: None
+			height: 50
+			font_size: 20
+			password: True
+			multiline: False
+			text: ''
+		Label:
+			canvas.before:
+				Color:
+					rgba: 0.2,0.2,0.7,1
+				Rectangle:
+					pos: self.pos
+					size: self.size
+			text_size: self.size
+			halign: 'right'
+			color: 1, 1, 0, 1
+			size_hint_y: None
+			height: 50
+			font_size: 30
+			text: 'Retype password: '
+		TextInput:
+			id: password2
+			size_hint_y: None
+			height: 50
+			font_size: 20
+			password: True
+			multiline: False
+			text: ''
+	Button:
+		center: root.center
+		color: 0,0,1,1
+		font_size: 35
+		size_hint: None, None
+		width: 200
+		height: 75
+		background_normal: ''
+		background_color: 0.2,0.7,0.4,0.8
+		text: 'Submit'
+		on_press: root.register()
+		on_release: app.root.current = 'log'
+<LoginScreen>:
+	GridLayout:
+		cols: 2
+		Label:
+			canvas.before:
+				Color:
+					rgba: 0.2,0.2,0.7,1
+				Rectangle:
+					pos: self.pos
+					size: self.size
+			text_size: self.size
+			halign: 'right'
+			color: 1, 1, 0, 1
+			size_hint: None, None
+			width: 200
+			height: 50
+			font_size: 30
+			text: 'Login: '
+		TextInput:
+			id: user_input
+			size_hint_y: None
+			height: 50
+			font_size: 20
+			multiline: False
+			text: 'user id'
+
+		Label:
+			canvas.before:
+				Color:
+					rgba: 0.2,0.2,0.7,1
+				Rectangle:
+					pos: self.pos
+					size: self.size
+			text_size: self.size
+			halign: 'right'
+			color: 1, 1, 0, 1
+			size_hint: None, None
+			width: 200
+			height: 50
+			font_size: 30
+			text: 'Password: '
+		TextInput:
+			id: password
+			size_hint_y: None
+			height: 50
+			font_size: 20
+			password: True
+			multiline: False
+			text: 'Type password'
+
+		Button:
+			color: 0,0,1,1
+			font_size: 35
+			size_hint: None, None
+			width: 200
+			height: 75
+			background_normal: ''
+			background_color: 0.2,0.7,0.4,0.8
+			text: 'Register'
+			on_release: app.root.current = 'reg'
+		Button:
+			color: 0,1,0,1
+			font_size: 40
+			size_hint: 1, None
+			height: 75
+			background_normal: ''
+			background_color: 0.2,0.4,0.6,0.8
+			text: 'Sign in >>> '
+			on_release: root.sing_in(user_input.text, password.text)
