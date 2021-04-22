@@ -3,6 +3,39 @@ Manager:
 		name: 'log'
 	RegisterScreen:
 		name: 'reg'
+	BookScreen:
+		name: 'book'
+
+<BookScreen>:
+	pos: root.pos
+	size: root.size
+	GridLayout:
+		cols: 2
+		padding: 10
+		spacing: 5
+		cols_minimum: {0: 400, 1: 100}
+		AddrTable:
+			Label:
+				canvas:
+					Color:
+						rgba: 1,1,1,1
+					Rectangle:
+						pos: self.pos
+						size: self.size
+		BoxLayout:
+			orientation: 'vertical'
+			Button:
+				text: 'Add contact'
+				on_release: pass
+			Button:
+				text: 'Remove contact'
+				on_release: pass
+			Button:
+				text: 'Change contact'
+				on_release: pass
+			Button:
+				text: 'Logout'
+				on_release: app.root.current = 'log'
 
 <RegisterScreen>:
 	GridLayout:
@@ -86,6 +119,9 @@ Manager:
 		on_release: app.root.current = 'log'
 <LoginScreen>:
 	GridLayout:
+		size_hint: None, None
+		center: self.parent.center
+		size: root.width * 0.8, self. height
 		cols: 2
 		Label:
 			canvas.before:
@@ -152,4 +188,4 @@ Manager:
 			background_normal: ''
 			background_color: 0.2,0.4,0.6,0.8
 			text: 'Sign in >>> '
-			on_release: root.sing_in(user_input.text, password.text)
+			on_release: app.root.current = 'book'
