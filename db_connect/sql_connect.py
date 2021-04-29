@@ -4,25 +4,26 @@ from sqlite3 import Error
 path = r'sql_db/my_db.db'
 create_user = '''CREATE TABLE IF NOT EXISTS users (
 					id integer PRIMARY KEY AUTOINCREMENT,
-					user text NOT NULL,
+					login text NOT NULL,
 					password text NOT NULL
 					);'''
 
 create_contacts = '''CREATE TABLE IF NOT EXISTS contacts (
 					id integer PRIMARY KEY AUTOINCREMENT,
+                                        user_id integer,
 					name text NOT NULL,
 					second_name text NOT NULL,
 					email text NOT NULL,
 					phone integer,
-					FOREIGN KEY(user_id) REFERENCES users(user)
+					FOREIGN KEY(user_id) REFERENCES users(login)
 					);'''
 
 
 def connect(path):
     '''Create a db connection to the SQLite database
-            specified by the path
-            :param path: database file
-            :return: Connectin object or None
+    specified by the path
+    :param path: database file
+    :return: Connectin object or None
     '''
     connection = None
     try:

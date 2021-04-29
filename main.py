@@ -29,17 +29,20 @@ class LoginScreen(Screen):
 
 
 class RegisterScreen(Screen):
-    def register(self, user, pass1, pass2):
+    def register(self, log, pass1, pass2):
         connection = connect(path)
-        query = '''SELECT user FROM users'''
+        query = '''SELECT login FROM users'''
         user_exists = read_query(connection, query)
         if user_exists:
             print('Login exists, choose other name')
+        elif len(pass1) < 6:
+            print('Too short password')
         elif pass1 != pass2:
             print('Passwords do not match')
         else:
-            query = ''' INSERT INTO users(user, password) VALUES (?, ?)  '''
-            task = (user, pass1)
+            query = ''' INSERT INTO users(login, password)
+                        VALUES (?, ?);'''
+            task = (str(log), str(pass1))
             do_query(connection, query, task)
         close_connection(connection)
 
