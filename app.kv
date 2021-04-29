@@ -11,8 +11,8 @@ Manager:
 	size: root.size
 	GridLayout:
 		cols: 2
-		padding: 10
-		spacing: 5
+		padding: 25
+		spacing: 15
 		cols_minimum: {0: 400, 1: 100}
 		AddrTable:
 			Label:
@@ -20,8 +20,8 @@ Manager:
 					Color:
 						rgba: 1,1,1,1
 					Rectangle:
-						pos: self.pos
-						size: self.size
+						pos: self.parent.pos
+						size: self.parent.size
 		BoxLayout:
 			orientation: 'vertical'
 			Button:
@@ -115,7 +115,7 @@ Manager:
 		background_normal: ''
 		background_color: 0.2,0.7,0.4,0.8
 		text: 'Submit'
-		on_press: root.register()
+		on_press: root.register(user_name, password1.text, password2.text)
 		on_release: app.root.current = 'log'
 <LoginScreen>:
 	GridLayout:
@@ -179,6 +179,7 @@ Manager:
 			background_normal: ''
 			background_color: 0.2,0.7,0.4,0.8
 			text: 'Register'
+			on_press: root.register()
 			on_release: app.root.current = 'reg'
 		Button:
 			color: 0,1,0,1
