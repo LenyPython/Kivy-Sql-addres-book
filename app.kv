@@ -18,7 +18,7 @@ Manager:
 			Label:
 				canvas:
 					Color:
-						rgba: 1,1,1,1
+						rgba: 1,1,1,1111111 
 					Rectangle:
 						pos: self.parent.pos
 						size: self.parent.size
@@ -26,13 +26,13 @@ Manager:
 			orientation: 'vertical'
 			Button:
 				text: 'Add contact'
-				on_release: pass
+				on_release: root.add_contact()
 			Button:
 				text: 'Remove contact'
-				on_release: pass
+				on_release: root.remove_contact()
 			Button:
 				text: 'Change contact'
-				on_release: pass
+				on_release: root.change_contact()
 			Button:
 				text: 'Logout'
 				on_release: app.root.current = 'log'
@@ -115,7 +115,7 @@ Manager:
 		background_normal: ''
 		background_color: 0.2,0.7,0.4,0.8
 		text: 'Submit'
-		on_press: root.register(user_name, password1.text, password2.text)
+		on_press: root.register(user_name.text, password1.text, password2.text)
 		on_release: app.root.current = 'log'
 <LoginScreen>:
 	GridLayout:
@@ -139,7 +139,7 @@ Manager:
 			font_size: 30
 			text: 'Login: '
 		TextInput:
-			id: user_input
+			id: login
 			size_hint_y: None
 			height: 50
 			font_size: 20
@@ -189,4 +189,4 @@ Manager:
 			background_normal: ''
 			background_color: 0.2,0.4,0.6,0.8
 			text: 'Sign in >>> '
-			on_release: app.root.current = 'book'
+			on_release: root.sing_in(login.text, password.text)

@@ -84,7 +84,7 @@ def do_query(conn, query, task):
         print(f'Error: {e}')
 
 
-def read_query(conn, query):
+def read_query(conn, query, task):
     '''Read query form data base
     :param conn: Connection object
     :param query: query statment
@@ -93,8 +93,8 @@ def read_query(conn, query):
     cursor = conn.cursor()
     result = None
     try:
-        cursor.execute(query)
-        result = cursor.fetchall()
+        cursor.execute(query, (task,))
+        result = cursor.fetchone()
         return result
     except Error as e:
         print(f'Error: {e}')
