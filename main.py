@@ -10,21 +10,32 @@ from db_connect.sql_connect import create_user_contacts, path
 
 
 class BookScreen(Screen):
-    def add_contact():
-        print('add contact')
+    def add_contact(self):
+        popup = AddContact()
+        popup.open()
 
-    def remove_contact():
-        pass
+    def remove_contact(self):
+        popup = UserExists()
+        popup.open()
 
-    def change_contact():
-        pass
+    def change_contact(self):
+        popup = AddContact()
+        popup.open()
+
+
+class ContactForm(Widget):
+    pass
 
 
 class AddrTable(Widget):
     pass
 
 
-class ErrorMsg(Popup):
+class AddContact(Popup):
+    pass
+
+
+class UserExists(Popup):
     pass
 
 
@@ -53,17 +64,20 @@ class RegisterScreen(Screen):
         connection = connect(path)
         query = '''SELECT login FROM users WHERE login=?'''
         user_exists = read_query(connection, query, log)
+        popup = UserExists()
         if user_exists:
-            print(user_exists)
-            print('Login exists, choose other name')
+            popup.open()
         elif len(pass1) < 6:
-            print('Too short password')
+            popup.content.text = 'Password too short'
+            popup.open()
         elif pass1 != pass2:
-            print('Passwords do not match')
+            popup.content.text = "Passwords don't match"
+            popup.open()
         else:
             query = ''' INSERT INTO users(login, password)
                         VALUES (?, ?)'''
             do_query(connection, query, (log, pass1,))
+            kv.current = 'log'
         close_connection(connection)
 
 

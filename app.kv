@@ -1,3 +1,4 @@
+#:import Factory kivy.factory.Factory
 Manager:
 	LoginScreen:
 		name: 'log'
@@ -116,7 +117,6 @@ Manager:
 		background_color: 0.2,0.7,0.4,0.8
 		text: 'Submit'
 		on_press: root.register(user_name.text, password1.text, password2.text)
-		on_release: app.root.current = 'log'
 <LoginScreen>:
 	GridLayout:
 		size_hint: None, None
@@ -190,3 +190,47 @@ Manager:
 			background_color: 0.2,0.4,0.6,0.8
 			text: 'Sign in >>> '
 			on_release: root.sing_in(login.text, password.text)
+
+<UserExists@Popup>:
+	title: 'Error'
+	size_hint: 0.5, None
+	height: 150
+	text: 'lol'
+	Label:
+		size_hint: 1, None
+		font_size: 32
+		text: 'Choose other login'
+
+<AddContact@Popup>:
+	title: 'Add new contact'
+	title_align: 'center'
+	title_size: 20
+	size_hint: 0.7, 0.7
+	ContactForm:
+
+<ContactForm>:
+	GridLayout:
+		pos: self.parent.pos
+		size: self.parent.size
+		cols: 2
+		Label:
+			text: 'Name:'
+		TextInput:
+			multiline: False
+		Label:
+			text: 'Second name:'
+		TextInput:
+			multiline: False
+		Label:
+			text: 'E-mail:'
+		TextInput:
+			multiline: False
+		Label:
+			text: 'Phone:'
+		TextInput:
+			multiline: False
+		Label:
+		Button:
+			text: 'Submit'
+			on_release: pass
+
