@@ -22,9 +22,18 @@ class BookScreen(Screen):
         popup = AddContact()
         popup.open()
 
+    def logout(self):
+        kv.user = None
+        kv.current = 'log'
+
 
 class ContactForm(Widget):
-    pass
+    def insert(self, name, second, e_mail, phone):
+        query = 'INSERT INTO contacts(user_id, name, second_name, email, phone) VALUES (?, ?, ?, ?, ?)'
+        task = (kv.user, name, second, e_mail, phone)
+        connection = connect(path)
+        do_query(connection, query, task)
+        close_connection(connection)
 
 
 class AddrTable(Widget):
@@ -49,12 +58,19 @@ class LoginScreen(Screen):
         connection = connect(path)
         query = '''SELECT login FROM users WHERE login=?'''
         user_exists = read_query(connection, query, user_id)
+        popup = UserExists()
         if user_exists:
             query = '''SELECT password FROM users WHERE login=?'''
             pass_check = read_query(connection, query, user_id)[0]
             if password == pass_check:
-                print(pass_check)
+                kv.user = user_id
                 kv.current = 'book'
+            else:
+                popup.title = 'Wrong password, try again...'
+                popup.open()
+        else:
+            popup.title = 'Bad credentials: login'
+            popup.open()
 
         close_connection(connection)
 
@@ -68,10 +84,10 @@ class RegisterScreen(Screen):
         if user_exists:
             popup.open()
         elif len(pass1) < 6:
-            popup.content.text = 'Password too short'
+            popup.title = 'Password too short'
             popup.open()
         elif pass1 != pass2:
-            popup.content.text = "Passwords don't match"
+            popup.title = "Passwords don't match"
             popup.open()
         else:
             query = ''' INSERT INTO users(login, password)
@@ -91,6 +107,7 @@ kv = Builder.load_file('app.kv')
 class AddrBook(App):
     def build(self):
         Window.clearcolor = (55/255, 30/255, 35/255, 1)
+        kv.user = None
         return kv
 
 

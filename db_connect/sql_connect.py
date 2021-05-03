@@ -10,7 +10,7 @@ create_user = '''CREATE TABLE IF NOT EXISTS users (
 
 create_contacts = '''CREATE TABLE IF NOT EXISTS contacts (
 					id integer PRIMARY KEY AUTOINCREMENT,
-                                        user_id integer,
+                                        user_id text,
 					name text NOT NULL,
 					second_name text NOT NULL,
 					email text NOT NULL,
