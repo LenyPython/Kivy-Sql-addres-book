@@ -4,7 +4,7 @@ from sqlite3 import Error
 path = r'sql_db/my_db.db'
 create_user = '''CREATE TABLE IF NOT EXISTS users (
 					id integer PRIMARY KEY AUTOINCREMENT,
-					login text NOT NULL,
+					login text UNIQE NOT NULL,
 					password text NOT NULL
 					);'''
 

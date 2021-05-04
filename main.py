@@ -30,9 +30,9 @@ class BookScreen(Screen):
 class ContactForm(Widget):
     def insert(self, name, second, e_mail, phone):
         query = 'INSERT INTO contacts(user_id, name, second_name, email, phone) VALUES (?, ?, ?, ?, ?)'
-        task = (kv.user, name, second, e_mail, phone)
+        print(kv.user)
         connection = connect(path)
-        do_query(connection, query, task)
+        do_query(connection, query, (kv.user, name, second, e_mail, phone,))
         close_connection(connection)
 
 
@@ -53,6 +53,7 @@ class LoginScreen(Screen):
         connection = connect(path)
         create_user_contacts(connection)
         close_connection(connection)
+        kv.current = 'reg'
 
     def sing_in(self, user_id, password, *args):
         connection = connect(path)

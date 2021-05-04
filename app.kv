@@ -179,7 +179,7 @@ Manager:
 			width: 200
 			height: 75
 			text: 'Register'
-			on_release: app.root.current = 'reg'
+			on_release: root.register()
 		Button:
 			font_size: 40
 			size_hint: 1, None
@@ -236,5 +236,5 @@ Manager:
 			width: 250
 			height: 50
 			text: 'Submit'
-			on_release: root.insert(name, second, e_mail, phone)
+			on_release: root.insert(name.text, second.text, e_mail.text, phone.text)
 
