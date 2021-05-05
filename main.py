@@ -46,6 +46,7 @@ class AddrTable(Widget):
         query = '''SELECT * FROM contacts WHERE user_id=?'''
         contacts = read_contacts(connection, query, kv.user)
         close_connection(connection)
+        self.ids['bl'].clear_widgets()
         for contact in contacts:
             contact_widget = Contact()
             contact_widget.ids['index'].text = str(contact[0])
