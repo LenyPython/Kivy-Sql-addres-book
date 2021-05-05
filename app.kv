@@ -16,13 +16,7 @@ Manager:
 		spacing: 15
 		cols_minimum: {0: 400, 1: 100}
 		AddrTable:
-			Label:
-				canvas:
-					Color:
-						rgba: 1,1,1,1111111 
-					Rectangle:
-						pos: self.parent.pos
-						size: self.parent.size
+
 		BoxLayout:
 			orientation: 'vertical'
 			Button:
@@ -37,6 +31,33 @@ Manager:
 			Button:
 				text: 'Logout'
 				on_release: root.logout()
+
+<AddrTable>:
+	canvas:
+		Color:
+			rgba: 1,1,1,1
+		Rectangle:
+			pos: root.pos
+			size: root.size
+	BoxLayout:
+		id: bl
+		pos: root.pos
+		size: root.size
+		orientation: 'vertical'
+		BoxLayout:
+			orientation: 'horizontal'
+			Label:
+				text: 'nasdofnsaodnf'
+				color: 0,0,0,1
+			Label:
+				text: 'nasdofnsaodnf'
+				color: 0,0,0,1
+			Label:
+				text: 'nasdofnsaodnf'
+				color: 0,0,0,1
+	Button:
+		text: 'pront'
+		on_release: root.read_contacts()
 
 <RegisterScreen>:
 	GridLayout:
@@ -122,6 +143,7 @@ Manager:
 		height: 75
 		text: 'Submit'
 		on_press: root.register(user_name.text, password1.text, password2.text)
+
 <LoginScreen>:
 	GridLayout:
 		size_hint: None, None
@@ -236,5 +258,27 @@ Manager:
 			width: 250
 			height: 50
 			text: 'Submit'
-			on_release: root.insert(name.text, second.text, e_mail.text, phone.text)
+			on_release: root.insert(name.text, second.text, e_mail.text, phone.text); root.parent.parent.parent.dismiss()
 
+<Contact>:
+	orientation: 'horizontal'
+	Label:
+		id: index 
+		text: ''
+		color: 0,0,0,1
+	Label:
+		id: name 
+		text: ''
+		color: 0,0,0,1
+	Label:
+		id: second
+		text: ''
+		color: 0,0,0,1
+	Label:
+		id: email
+		text: ''
+		color: 0,0,0,1
+	Label:
+		id: phone
+		text: ''
+		color: 0,0,0,1

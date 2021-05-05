@@ -1,24 +1,24 @@
 import kivy
 from kivy.app import App
 from kivy.lang import Builder
-from kivy.core.window import Window
 from kivy.uix.widget import Widget
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager, Screen
-from db_connect.sql_connect import connect, do_query, read_query, close_connection, path
+from db_connect.sql_connect import connect, do_query, read_contacts, read_query, close_connection, path
 from db_connect.sql_connect import create_user_contacts, path
 
 
 class BookScreen(Screen):
+
     def add_contact(self):
         popup = AddContact()
         popup.open()
 
-    def remove_contact(self):
-        popup = UserExists()
-        popup.open()
+    def remove_contact(self, name, sec, email, phone):
+        pass
 
-    def change_contact(self):
+    def change_contact(self, name, sec, email, phone):
         popup = AddContact()
         popup.open()
 
@@ -27,17 +27,33 @@ class BookScreen(Screen):
         kv.current = 'log'
 
 
+class Contact(BoxLayout):
+    pass
+
+
 class ContactForm(Widget):
     def insert(self, name, second, e_mail, phone):
         query = 'INSERT INTO contacts(user_id, name, second_name, email, phone) VALUES (?, ?, ?, ?, ?)'
-        print(kv.user)
         connection = connect(path)
         do_query(connection, query, (kv.user, name, second, e_mail, phone,))
         close_connection(connection)
 
 
 class AddrTable(Widget):
-    pass
+    def read_contacts(self):
+        print(kv.user)
+        connection = connect(path)
+        query = '''SELECT * FROM contacts WHERE user_id=?'''
+        contacts = read_contacts(connection, query, kv.user)
+        close_connection(connection)
+        for contact in contacts:
+            contact_widget = Contact()
+            contact_widget.ids['index'].text = str(contact[0])
+            contact_widget.ids['name'].text = str(contact[2])
+            contact_widget.ids['second'].text = str(contact[3])
+            contact_widget.ids['email'].text = str(contact[4])
+            contact_widget.ids['phone'].text = str(contact[5])
+            self.ids['bl'].add_widget(contact_widget)
 
 
 class AddContact(Popup):
@@ -55,7 +71,7 @@ class LoginScreen(Screen):
         close_connection(connection)
         kv.current = 'reg'
 
-    def sing_in(self, user_id, password, *args):
+    def sing_in(self, user_id, password):
         connection = connect(path)
         query = '''SELECT login FROM users WHERE login=?'''
         user_exists = read_query(connection, query, user_id)
@@ -107,8 +123,8 @@ kv = Builder.load_file('app.kv')
 
 class AddrBook(App):
     def build(self):
-        Window.clearcolor = (55/255, 30/255, 35/255, 1)
         kv.user = None
+        kv.contacts = None
         return kv
 
 

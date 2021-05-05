@@ -98,3 +98,19 @@ def read_query(conn, query, task):
         return result
     except Error as e:
         print(f'Error: {e}')
+
+
+def read_contacts(conn, query, task):
+    '''Read query form data base
+    :param conn: Connection object
+    :param query: query statment
+    :return result: data fetched from data base
+    '''
+    cursor = conn.cursor()
+    result = None
+    try:
+        cursor.execute(query, (task,))
+        result = cursor.fetchall()
+        return result
+    except Error as e:
+        print(f'Error: {e}')
