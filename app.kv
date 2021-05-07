@@ -1,4 +1,3 @@
-#:import Factory kivy.factory.Factory
 Manager:
 	LoginScreen:
 		name: 'log'
@@ -15,49 +14,26 @@ Manager:
 		padding: 25
 		spacing: 15
 		cols_minimum: {0: 400, 1: 100}
-		AddrTable:
-
+		BoxLayout:
+			id: bl
+			canvas:
+				Color:
+					rgba: 1,1,1,1
+				Rectangle:
+					pos: self.pos
+					size: self.size
+			orientation: 'vertical'
 		BoxLayout:
 			orientation: 'vertical'
 			Button:
 				text: 'Add contact'
 				on_release: root.add_contact()
 			Button:
-				text: 'Remove contact'
-				on_release: root.remove_contact()
-			Button:
-				text: 'Change contact'
-				on_release: root.change_contact()
+				text: 'Show contacts'
+				on_release: root.read_contacts()
 			Button:
 				text: 'Logout'
 				on_release: root.logout()
-
-<AddrTable>:
-	canvas:
-		Color:
-			rgba: 1,1,1,1
-		Rectangle:
-			pos: root.pos
-			size: root.size
-	BoxLayout:
-		id: bl
-		pos: root.pos
-		size: root.size
-		orientation: 'vertical'
-		BoxLayout:
-			orientation: 'horizontal'
-			Label:
-				text: 'nasdofnsaodnf'
-				color: 0,0,0,1
-			Label:
-				text: 'nasdofnsaodnf'
-				color: 0,0,0,1
-			Label:
-				text: 'nasdofnsaodnf'
-				color: 0,0,0,1
-	Button:
-		text: 'pront'
-		on_release: root.read_contacts()
 
 <RegisterScreen>:
 	GridLayout:
@@ -157,7 +133,6 @@ Manager:
 				Rectangle:
 					pos: self.pos
 					size: self.size
-			text_size: self.size
 			halign: 'right'
 			color: 1, 1, 0, 1
 			size_hint: None, None
@@ -194,7 +169,7 @@ Manager:
 			font_size: 20
 			password: True
 			multiline: False
-			text: 'Type password'
+			text: '111111'
 		Button:
 			font_size: 35
 			size_hint: None, None
@@ -209,7 +184,7 @@ Manager:
 			text: 'Sign in >>> '
 			on_release: root.sing_in(login.text, password.text)
 
-<UserExists@Popup>:
+<UserExists>:
 	title: 'Login exists'
 	title_align: 'center'
 	title_size: 20
@@ -220,14 +195,11 @@ Manager:
 		size_hint: 0.6, 0.7
 		on_release: root.dismiss()
 
-<AddContact@Popup>:
+<AddContact>:
 	title: 'Add new contact'
 	title_align: 'center'
 	title_size: 20
 	size_hint: 0.7, 0.7
-	ContactForm:
-
-<ContactForm>:
 	GridLayout:
 		pos: self.parent.pos
 		size: self.parent.size
@@ -245,7 +217,7 @@ Manager:
 		Label:
 			text: 'E-mail:'
 		TextInput:
-			id: e_mail
+			id: email
 			multiline: False
 		Label:
 			text: 'Phone:'
@@ -258,10 +230,12 @@ Manager:
 			width: 250
 			height: 50
 			text: 'Submit'
-			on_release: root.insert(name.text, second.text, e_mail.text, phone.text); root.parent.parent.parent.dismiss()
+			on_release: root.insert(name.text, second.text, email.text, phone.text); root.dismiss()
 
 <Contact>:
 	orientation: 'horizontal'
+	size_hint: 1, None
+	height: 30
 	Label:
 		id: index 
 		text: ''
@@ -282,3 +256,12 @@ Manager:
 		id: phone
 		text: ''
 		color: 0,0,0,1
+	Button:
+		size_hint: None, 1
+		text: "Change"
+		on_release:root.change_contact(name.text, second.text, email.text, phone.text)
+	Button:
+		size_hint: None, 1
+		width: 30
+		text: 'x'
+		on_release: root.remove_contact(name.text, second.text, email.text, phone.text)

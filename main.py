@@ -10,15 +10,7 @@ from db_connect.sql_connect import create_user_contacts, path
 
 
 class BookScreen(Screen):
-
     def add_contact(self):
-        popup = AddContact()
-        popup.open()
-
-    def remove_contact(self, name, sec, email, phone):
-        pass
-
-    def change_contact(self, name, sec, email, phone):
         popup = AddContact()
         popup.open()
 
@@ -26,30 +18,15 @@ class BookScreen(Screen):
         kv.user = None
         kv.current = 'log'
 
-
-class Contact(BoxLayout):
-    pass
-
-
-class ContactForm(Widget):
-    def insert(self, name, second, e_mail, phone):
-        query = 'INSERT INTO contacts(user_id, name, second_name, email, phone) VALUES (?, ?, ?, ?, ?)'
-        connection = connect(path)
-        do_query(connection, query, (kv.user, name, second, e_mail, phone,))
-        close_connection(connection)
-
-
-class AddrTable(Widget):
     def read_contacts(self):
-        print(kv.user)
         connection = connect(path)
         query = '''SELECT * FROM contacts WHERE user_id=?'''
         contacts = read_contacts(connection, query, kv.user)
         close_connection(connection)
         self.ids['bl'].clear_widgets()
-        for contact in contacts:
+        for i, contact in enumerate(contacts):
             contact_widget = Contact()
-            contact_widget.ids['index'].text = str(contact[0])
+            contact_widget.ids['index'].text = str(i + 1)
             contact_widget.ids['name'].text = str(contact[2])
             contact_widget.ids['second'].text = str(contact[3])
             contact_widget.ids['email'].text = str(contact[4])
@@ -57,8 +34,29 @@ class AddrTable(Widget):
             self.ids['bl'].add_widget(contact_widget)
 
 
+class Contact(BoxLayout):
+    def remove_contact(self, name, second, email, phone):
+        connection = connect(path)
+        query = '''DELETE FROM contacts WHERE name=? AND second_name=? AND email=? AND phone=?'''
+        do_query(connection, query, (name, second, email, phone))
+        close_connection(connection)
+        self.parent.parent.parent.read_contacts()
+
+    def change_contact(self, name, second, email, phone):
+        popup = AddContact()
+        popup.ids['name'].text = name
+        popup.ids['second'].text = second
+        popup.ids['email'].text = email
+        popup.ids['phone'].text = phone
+        popup.open()
+
+
 class AddContact(Popup):
-    pass
+    def insert(self, name, second, e_mail, phone):
+        query = 'INSERT INTO contacts(user_id, name, second_name, email, phone) VALUES (?, ?, ?, ?, ?)'
+        connection = connect(path)
+        do_query(connection, query, (kv.user, name, second, e_mail, phone))
+        close_connection(connection)
 
 
 class UserExists(Popup):
