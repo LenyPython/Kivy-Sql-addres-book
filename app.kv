@@ -4,6 +4,7 @@ Manager:
 	RegisterScreen:
 		name: 'reg'
 	BookScreen:
+		id: book
 		name: 'book'
 
 <BookScreen>:
@@ -28,9 +29,6 @@ Manager:
 			Button:
 				text: 'Add contact'
 				on_release: root.add_contact()
-			Button:
-				text: 'Show contacts'
-				on_release: root.read_contacts()
 			Button:
 				text: 'Logout'
 				on_release: root.logout()
@@ -104,7 +102,7 @@ Manager:
 			multiline: False
 			text: ''
 	Button:
-		pos: root.center_x - self.width // 2 , root.center_y - 90
+		pos: root.center_x - self.width // 2 , root.center_y - 120
 		font_size: 35
 		size_hint: None, None
 		width: 200
@@ -196,6 +194,7 @@ Manager:
 		on_release: root.dismiss()
 
 <AddContact>:
+	auto_dismiss: False
 	title: 'Add new contact'
 	title_align: 'center'
 	title_size: 20
@@ -204,6 +203,8 @@ Manager:
 		pos: self.parent.pos
 		size: self.parent.size
 		cols: 2
+		padding: 5
+		spacing: 5
 		Label:
 			text: 'Name:'
 		TextInput:
@@ -224,8 +225,14 @@ Manager:
 		TextInput:
 			id: phone
 			multiline: False
-		Label:
 		Button:
+			size_hint: None, None
+			width: 250
+			height: 50
+			text: 'Cancel'
+			on_release: root.dismiss()
+		Button:
+			id: function
 			size_hint: None, None
 			width: 250
 			height: 50

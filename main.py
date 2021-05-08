@@ -26,6 +26,7 @@ class BookScreen(Screen):
         self.ids['bl'].clear_widgets()
         for i, contact in enumerate(contacts):
             contact_widget = Contact()
+            contact_widget.sql_id = str(contact[0])
             contact_widget.ids['index'].text = str(i + 1)
             contact_widget.ids['name'].text = str(contact[2])
             contact_widget.ids['second'].text = str(contact[3])
@@ -48,6 +49,7 @@ class Contact(BoxLayout):
         popup.ids['second'].text = second
         popup.ids['email'].text = email
         popup.ids['phone'].text = phone
+        popup.ids['function'].on_release = popup.update_contact
         popup.open()
 
 
@@ -57,6 +59,17 @@ class AddContact(Popup):
         connection = connect(path)
         do_query(connection, query, (kv.user, name, second, e_mail, phone))
         close_connection(connection)
+        kv.ids['book'].read_contacts()
+
+    def update_contact(self):
+        query = '''UPDATE contacts SET name=?, second_name=?, email=?, phone=?
+                WHERE id =? AND user_id=?'''
+        connection = connect(path)
+        do_query(connection, query, (self.ids['name'].text, self.ids['second'].text,
+                 self.ids['email'].text, self.ids['phone'].text, self.sql_id, kv.user))
+        close_connection(connection)
+        # self.dismiss()
+        kv.ids['book'].read_contacts()
 
 
 class UserExists(Popup):
@@ -81,6 +94,8 @@ class LoginScreen(Screen):
             if password == pass_check:
                 kv.user = user_id
                 kv.current = 'book'
+                self.ids['login'].text = self.ids['password'].text = ''
+                kv.ids['book'].read_contacts()
             else:
                 popup.title = 'Wrong password, try again...'
                 popup.open()
