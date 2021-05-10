@@ -193,6 +193,51 @@ Manager:
 		size_hint: 0.6, 0.7
 		on_release: root.dismiss()
 
+<ChangeContact>:
+	auto_dismiss: False
+	title: 'Change credentials'
+	title_align: 'center'
+	title_size: 20
+	size_hint: 0.7, 0.7
+	GridLayout:
+		pos: self.parent.pos
+		size: self.parent.size
+		cols: 2
+		padding: 5
+		spacing: 5
+		Label:
+			text: 'Name:'
+		TextInput:
+			id: name
+			multiline: False
+		Label:
+			text: 'Second name:'
+		TextInput:
+			id: second
+			multiline: False
+		Label:
+			text: 'E-mail:'
+		TextInput:
+			id: email
+			multiline: False
+		Label:
+			text: 'Phone:'
+		TextInput:
+			id: phone
+			multiline: False
+		Button:
+			size_hint: None, None
+			width: 250
+			height: 50
+			text: 'Cancel'
+			on_release: root.dismiss()
+		Button:
+			size_hint: None, None
+			width: 250
+			height: 50
+			text: 'Submit'
+			on_release: root.update_contact(name.text, second.text, email.text, phone.text); root.dismiss()
+
 <AddContact>:
 	auto_dismiss: False
 	title: 'Add new contact'

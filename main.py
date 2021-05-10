@@ -41,16 +41,27 @@ class Contact(BoxLayout):
         query = '''DELETE FROM contacts WHERE name=? AND second_name=? AND email=? AND phone=?'''
         do_query(connection, query, (name, second, email, phone))
         close_connection(connection)
-        self.parent.parent.parent.read_contacts()
+        kv.ids.book.read_contacts()
 
     def change_contact(self, name, second, email, phone):
-        popup = AddContact()
+        popup = ChangeContact()
         popup.ids['name'].text = name
         popup.ids['second'].text = second
         popup.ids['email'].text = email
         popup.ids['phone'].text = phone
-        popup.ids['function'].on_release = popup.update_contact
+        popup.sql_id = self.sql_id
         popup.open()
+
+
+class ChangeContact(Popup):
+    def update_contact(self, name, sec, email, phone):
+        query = '''UPDATE contacts SET name=?, second_name=?, email=?, phone=?
+                WHERE id =? AND user_id=?'''
+        connection = connect(path)
+        do_query(connection, query, (name, sec,
+                 email, phone, self.sql_id, kv.user))
+        close_connection(connection)
+        kv.ids['book'].read_contacts()
 
 
 class AddContact(Popup):
@@ -59,16 +70,6 @@ class AddContact(Popup):
         connection = connect(path)
         do_query(connection, query, (kv.user, name, second, e_mail, phone))
         close_connection(connection)
-        kv.ids['book'].read_contacts()
-
-    def update_contact(self):
-        query = '''UPDATE contacts SET name=?, second_name=?, email=?, phone=?
-                WHERE id =? AND user_id=?'''
-        connection = connect(path)
-        do_query(connection, query, (self.ids['name'].text, self.ids['second'].text,
-                 self.ids['email'].text, self.ids['phone'].text, self.sql_id, kv.user))
-        close_connection(connection)
-        # self.dismiss()
         kv.ids['book'].read_contacts()
 
 
