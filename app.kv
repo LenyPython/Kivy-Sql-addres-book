@@ -15,15 +15,18 @@ Manager:
 		padding: 25
 		spacing: 15
 		cols_minimum: {0: 400, 1: 100}
-		BoxLayout:
-			id: bl
-			canvas:
+		ScrollView:
+			canvas.before:
 				Color:
 					rgba: 1,1,1,1
 				Rectangle:
 					pos: self.pos
 					size: self.size
-			orientation: 'vertical'
+			BoxLayout:
+				id: bl
+				size_hint: 1, None
+				height: self.minimum_height
+				orientation: 'vertical'
 		BoxLayout:
 			orientation: 'vertical'
 			Button:
@@ -182,7 +185,7 @@ Manager:
 			text: 'Sign in >>> '
 			on_release: root.sing_in(login.text, password.text)
 
-<UserExists>:
+<UserExists@Popup>:
 	title: 'Login exists'
 	title_align: 'center'
 	title_size: 20
@@ -287,7 +290,7 @@ Manager:
 <Contact>:
 	orientation: 'horizontal'
 	size_hint: 1, None
-	height: 30
+	height: 45
 	Label:
 		id: index 
 		text: ''
